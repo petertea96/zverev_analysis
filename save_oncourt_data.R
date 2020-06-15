@@ -216,7 +216,6 @@ sum(complete.cases(atp_dat %>% select(-server_rank, -returner_rank, -tournament_
 
 atp_dat_full <- atp_dat %>%
   
-  # --> !!! Caution: Here, we'd only consider players who are ranked !!!
   filter(complete.cases(atp_dat %>% select(-server_rank, -returner_rank,
                                            -tournament_level, -server_birthday,
                                            -returner_birthday, -tournament_date,
@@ -235,12 +234,18 @@ atp_dat_full <- atp_dat %>%
     # --> Pr(Win service point | 2nd serve in)
     pr_w2_giv_2in = s_2ndWon/s_2ndIn,
     
-    # --> Expected 2nd serve win % with a 1st serve approach
+    # --> Pr(win on 1st serve)
     pr_win_on_1st_serve = pr_w1_giv_1in * pr_1stin,
     
-    pr_win_on_2nd_serve = s_2ndWon/ (s_svpt - s_1stIn)
+    # --> Pr(win on 2nd serve)
+    pr_win_on_2nd_serve = s_2ndWon/ (s_svpt - s_1stIn),
     
+    #-->Pr(win on serve)
+    pr_win_on_serve = pr_1stin*pr_w1_giv_1in + ((1- pr_1stin)*pr_2ndin*pr_w2_giv_2in) ,
     
+    # --> Pr(win w/ 2 first serves)
+    
+    pr_win_two_first_serves = pr_1stin*pr_w1_giv_1in + ((1- pr_1stin)* pr_1stin*pr_w1_giv_1in )
   )
 
 

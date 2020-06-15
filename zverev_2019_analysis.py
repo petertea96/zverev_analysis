@@ -37,7 +37,7 @@ data_2019['df_per_ss'] = data_2019['s_df'] / (data_2019['s_2ndIn'] + data_2019['
 
 ################################################################################
 ################################################################################
-# Percentile serve stats
+# Serve stats
 # Average stats
 data_2019_mean = data_2019.groupby(['server']).mean()
 
@@ -45,26 +45,34 @@ data_2019_mean = data_2019.groupby(['server']).mean()
 match_counts = data_2019.groupby(['server']).size()
 data_2019_mean['num_matches'] = match_counts.values
 
-# Consider only players who played at least 15 matches
-data_2019_mean = data_2019_mean[data_2019_mean.num_matches >= 15]
+# Consider only players who played at least 15 matches?
+#data_2019_mean = data_2019_mean[data_2019_mean.num_matches >= 15]
 
-# Consider only players who are ranked in top 100?
-#data_2019_mean = data_2019_mean[data_2019_mean.server_rank <= 100]
+# Consider only players who are ranked in top 100
+# Most top players will be playing against top players, so ot shouldn't
+# matter who we filter by their opponent
+data_2019_mean = data_2019_mean[(data_2019_mean.server_rank <= 100) ]
+#data_2019_mean = data_2019_mean[(data_2019_mean.server_rank <= 100) & (data_2019_mean.returner_rank <= 100)]
 
-#--> Get percentile rankings on only numeric columns
+#--> Get [percentile rankings] on only numeric columns
 numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 data_2019_mean_numeric = data_2019_mean.select_dtypes(include=numerics)
 
+# --> If we wanted to look at percetile rankings:
+#res = data_2019_mean_numeric.rank(pct=True)*100
 
-res = data_2019_mean_numeric.rank(pct=True)*100
+# --> We'll just use raw numbers
+res = data_2019_mean_numeric.copy()
 
-
-# --> Calculate percentiles, using only players ranked in top 10
+# --> Keep only players ranked in top 10
 # How does zverev compare to the top 10?
 top10_names = data_2019_mean[data_2019_mean['server_rank'] <=10].index.unique()
 
 top10 = res[res.index.isin(top10_names)]
 top10['name'] = top10.index
+top10 = top10[['name','pr_1stin', 'pr_2ndin','pr_w1_giv_1in', 
+               'pr_w2_giv_2in', 'pr_win_on_1st_serve','pr_win_on_2nd_serve',
+                'pr_win_on_serve', 'pr_win_two_first_serves']]
 top10.to_csv('./data/top10.csv',
              index = False)
 # --> plots in R
@@ -121,6 +129,7 @@ tosee = risky_adv_dat[risky_adv_dat.server == 'Alexander Zverev']
 tosee['pr_win_on_1st_serve'] - tosee['pr_win_on_2nd_serve']
 # 4.4% increase
 
+plt.figure(figsize=(25,15))
 fig=plt.figure()
 ax=fig.add_axes([0,0,1,1])
 ax.scatter(risky_adv_dat['pr_win_on_2nd_serve'],
@@ -128,9 +137,9 @@ ax.scatter(risky_adv_dat['pr_win_on_2nd_serve'],
            color='r',
            edgecolor = 'black',
            alpha = 0.6)
-ax.set_xlabel('Observed 2nd Serve Win Probability', fontweight = 'bold')
-ax.set_ylabel('Two 1st Serves Win Probability', fontweight = 'bold')
-ax.set_title('Two First Serves for a Second', 
+ax.set_xlabel('Observed Prob(Win on 2nd Serve)', fontweight = 'bold')
+ax.set_ylabel('Prob(Win on 2nd with Risky Serve)', fontweight = 'bold')
+ax.set_title('Balance of a Risky Serve', 
              fontweight = 'bold',
              fontsize = 16
              )

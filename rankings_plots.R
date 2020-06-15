@@ -34,16 +34,16 @@ strengths_melt = strengths_melt %>%
                                      pr_win_on_2nd_serve = 'Prob(Win on 2nd Serve)',
                                      pr_win_on_1st_serve = 'Prob(Win on 1st Serve)'))
 
-get_label = function(num){
-  num = floor(num)
-  suff <- case_when(num %in% c(11,12,13) ~ "th",
-                    num %% 10 == 1 ~ 'st',
-                    num %% 10 == 2 ~ 'nd',
-                    num %% 10 == 3 ~'rd',
-                    TRUE ~ "th")
+#get_label = function(num){
+#  num = floor(num)
+#  suff <- case_when(num %in% c(11,12,13) ~ "th",
+#                    num %% 10 == 1 ~ 'st',
+#                    num %% 10 == 2 ~ 'nd',
+##                    num %% 10 == 3 ~'rd',
+#                    TRUE ~ "th")
   
-  return(paste(num, suff, sep = ""))
-}
+#  return(paste(num, suff, sep = ""))
+#}
 
 fillcolors = c('Djokovic' = '#64A4E6', 'Nadal' = '#FB7971', 'Federer' = '#B8EBD0',
                'Zverev' = '#FFF694', 'Thiem' = '#BACEFF', 'Medvedev' = '#EAD7D7',
@@ -92,7 +92,10 @@ ggplot() +
             stat = "identity", position = 'dodge', width = 0.8, color = 'black') +
   geom_text(data = first_inwin_dat,
             aes(x = Performance, fill = name, y = Percentile,
-                label = paste(name,': ',get_label(Percentile), sep = '')),
+                label =  paste(name,': ', round(Percentile,3)*100, '%', sep = '')),
+                  
+                # label if we used rankings
+                #label = paste(name,': ',get_label(Percentile), sep = '')),
             position = position_dodge(width = 0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
@@ -103,13 +106,13 @@ ggplot() +
   geom_text(data = first_in_dat,
             aes(x = Performance, fill = name,
                 y = Percentile,
-                label = paste(name, ': ',get_label(Percentile), sep = '')),
+                label =  paste(name,': ', round(Percentile,3)*100, '%', sep = '')),
             position=position_dodge(0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
             size = 3.25,
             fontface = 'bold') +
-  ylab("Percentile Rank") +
+  ylab("Probability") +
   xlab("") + 
   ggtitle('2019 First Serve Performances') + 
   peter_theme()
@@ -135,7 +138,7 @@ second_inwin_dat$name <- factor(second_inwin_dat$name,
                                 levels = second_inwin_dat$name[order(second_inwin_dat$Percentile)])
 
 secondin_label = second_in_dat$Percentile
-secondin_label[1] = secondin_label[1] + 24
+#secondin_label[1] = secondin_label[1] + 24
 
 ggplot() + 
   coord_flip() +
@@ -144,7 +147,7 @@ ggplot() +
             stat = "identity", position = 'dodge', width = 0.8, color = 'black') +
   geom_text(data = second_inwin_dat,
             aes(x = Performance, fill = name, y = Percentile,
-                label = paste(name, ': ',get_label(Percentile), sep = '')),
+                label = paste(name, ': ',round(Percentile,3)*100, '%', sep = '')),
             position = position_dodge(width = 0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
@@ -156,13 +159,13 @@ ggplot() +
             aes(x = Performance, fill = name,
                 y = secondin_label,
                 #second_in_dat$Percentile; but modifying zverev's position
-                label = paste(name, ': ',get_label(Percentile), sep = '')),
+                label = paste(name, ': ',round(Percentile,3)*100, '%', sep = '')),
             position=position_dodge(0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
             size = 3.25,
             fontface = 'bold') +
-  ylab("Percentile Rank") +
+  ylab("Probability") +
   xlab("") + 
   ggtitle('2019 Second Serve Performances') + 
   peter_theme()
@@ -192,7 +195,7 @@ second_win_dat$name <- factor(second_win_dat$name,
                               levels = second_win_dat$name[order(second_win_dat$Percentile)])
 
 secondwin_labels = second_win_dat$Percentile
-secondwin_labels[1] = secondwin_labels[1] + 2.5 
+#secondwin_labels[1] = secondwin_labels[1] + 2.5 
 
 ggplot() + 
   coord_flip() +
@@ -202,7 +205,7 @@ ggplot() +
             stat = "identity", position = 'dodge', width = 0.8, color = 'black') +
   geom_text(data = first_win_dat,
             aes(x = Performance, fill = name, y = Percentile,
-                label = paste(name, ': ',get_label(Percentile), sep = '')),
+                label = paste(name, ': ',round(Percentile,3)*100, '%', sep = '')),
             position = position_dodge(width = 0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
@@ -212,13 +215,13 @@ ggplot() +
             stat = "identity", position = 'dodge', width = 0.8, color = 'black') +
   geom_text(data = second_win_dat,
             aes(x = Performance, fill = name, y = secondwin_labels,
-                label = paste(name, ': ',get_label(Percentile), sep = '')),
+                label = paste(name, ': ',round(Percentile,3)*100, '%', sep = '')),
             position = position_dodge(width = 0.8), 
             hjust = 1.1, 
             vjust = 0.5, 
             size = 3.25,
             fontface = 'bold') +
-  ylab("Percentile Rank") +
+  ylab("Probability") +
   xlab("") + 
   ggtitle('2019 Overall Serve Performances') + 
   peter_theme()
