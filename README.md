@@ -48,3 +48,8 @@ and for entire atp field.
  the only seasons with clear advantages)
 'zverev_career_two_first_serves.png'
 
+4.ATP_2019_two_first_serves_plot.ipynb
+- Things were getting really annoying with adjusting figure size,
+so I just did it all in jupyter notebook
+ 
+

@@ -110,6 +110,42 @@ awful = zverev[zverev.s_df >=15]
 ################################################################################
 
 
+##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
+# 'A Risky serve' plot (DIFFERENT FROM fivethirtyeight)
+##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
+pd.set_option('display.max_columns', 500)
+risky_adv_dat = data_2019_mean.reset_index()
+
+# Only consider players ranked top 100
+risky_adv_dat = risky_adv_dat[risky_adv_dat['server_rank'] <=100]
+
+# --> Who are above the line?
+risky_adv_dat[risky_adv_dat['pr_win_two_first_serves'] >  risky_adv_dat['pr_win_on_serve']]
+# Zverev, FAA, Kyrgios, Querrey
+
+# --> What is Zverev's percentage difference?
+tosee = risky_adv_dat[risky_adv_dat.server == 'Alexander Zverev']
+tosee['pr_win_on_serve'] - tosee['pr_win_two_first_serves']
+# 1.3% increase
+
+plt.figure(figsize=(20,10))
+fig=plt.figure()
+#ax=fig.add_axes([0,0,1,1])
+ax = fig.add_subplot(1, 1, 1)
+ax.scatter(risky_adv_dat['pr_win_on_serve'],
+           risky_adv_dat['pr_win_two_first_serves'],
+           color='r',
+           edgecolor = 'black',
+           alpha = 0.6)
+ax.set_xlabel('Observed Prob(Win on Serve)', fontweight = 'bold')
+ax.set_ylabel('Prob(Win with two 1st serves)', fontweight = 'bold')
+ax.set_title('Balance of a Risky Serve', 
+             fontweight = 'bold',
+             fontsize = 16
+             )
+ax.plot([0, 1], [0, 1], ls="--", c=".3")
+ax.set(xlim=(0.55, 0.8), ylim=(0.55, 0.8))
+
 
 
 ##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
@@ -117,7 +153,7 @@ awful = zverev[zverev.s_df >=15]
 ##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
 risky_adv_dat = data_2019_mean.reset_index()
 
-# Only conider players ranked top 100
+# Only consider players ranked top 100
 risky_adv_dat = risky_adv_dat[risky_adv_dat['server_rank'] <=100]
 
 # --> Who are above the line?
@@ -129,9 +165,10 @@ tosee = risky_adv_dat[risky_adv_dat.server == 'Alexander Zverev']
 tosee['pr_win_on_1st_serve'] - tosee['pr_win_on_2nd_serve']
 # 4.4% increase
 
-plt.figure(figsize=(25,15))
+plt.figure(figsize=(20,12))
 fig=plt.figure()
-ax=fig.add_axes([0,0,1,1])
+#ax=fig.add_axes([0,0,1,1])
+ax = fig.add_subplot(1, 1, 1)
 ax.scatter(risky_adv_dat['pr_win_on_2nd_serve'],
            risky_adv_dat['pr_win_on_1st_serve'],
            color='r',
@@ -139,7 +176,7 @@ ax.scatter(risky_adv_dat['pr_win_on_2nd_serve'],
            alpha = 0.6)
 ax.set_xlabel('Observed Prob(Win on 2nd Serve)', fontweight = 'bold')
 ax.set_ylabel('Prob(Win on 2nd with Risky Serve)', fontweight = 'bold')
-ax.set_title('Balance of a Risky Serve', 
+ax.set_title('Trade-offs of a Riskier 2nd Serve', 
              fontweight = 'bold',
              fontsize = 16
              )
@@ -178,6 +215,7 @@ ax.annotate('Querrey', querrey_coord,fontweight = 'bold',
             bbox=dict(facecolor='yellow', edgecolor='black', boxstyle='round'))
 #ax.annotate('Isner', isner_coord)
 plt.show()
+plt.savefig('atp_2019_two_first_serves.png', dpi=fig.dpi)
 ##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
 # 'A Risky serve' plot (same as seen in fivethirtyeight)
 ##### ----- ##### ----- ##### ----- ##### ----- ##### ----- ##### 
