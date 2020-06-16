@@ -43,7 +43,7 @@ $$
 w_1 / w_2 \geq p_2 / p_1
 $$
 
-which means that this strategy is only better when the relative probabilities of winning a point conditional on the first serve landing in compared to the second serve exceeds the relative probabilities of landing the second serve in compared to the first serve. 
+which means that this strategy is only better when the probability of winning a point conditional on the first serve landing in relative to the second serve exceeds the  probability of landing the second serve in relative to the first serve. 
 
 The norm in tennis is for the accuracy on second serve to far exceed that on first serve, that is, $p_2 >> p_1$. Conversely, while the conditional chance of winning on first serve is higher than that on second serve, it usually is not as massive of a relative difference. 
 
@@ -91,7 +91,7 @@ With these ideas in mind, lets look at the second serve characteristics among th
 
 <br>
 
-*Fig. 2: Comparison of observed 2nd serves to if 2nd serves were hit like a 1st serve.*
+*Fig. 2: Comparison of observed win probability on 2nd serve to the win probability "if 2nd serves were hit like a 1st serve".*
 
 
 Most players fall comfortably below the hashed line, meaning that this precarious strategy would not have boosted the $Prob(\mbox{Win on 2nd Serve})$ for a conglomerate of players. There are, however, 4 competitors for which this strategy appears to offer some tangible benefit: the most prominent name being ``Alexander Zverev``. Unlike Zverev's contemporaries who would mostly be dinged with an expected decrease in their $Prob(\mbox{Win on 2nd Serve})$, Zverev is sitting on a whopping 4.4% expected increase.
@@ -99,7 +99,7 @@ Most players fall comfortably below the hashed line, meaning that this precariou
 
 ### Zverev's Serve Elements
 
-What gives? What makes Zverev so different from the rest? As alluded in the mathematical setup, Zverev's two-first-serves advantage can be explained with a combination of two artifacts: his relative elite performance on first serve countered with his lackluster performance on second serve. To illustrate, lets compare his 2019 performance against the top ATP field. 
+What gives? What makes Zverev so different from the rest? As alluded in the mathematical setup, Zverev's two-first-serve advantage can be explained with a combination of two artifacts: his relative elite performance on first serve countered with his lackluster performance on second serve. To illustrate, lets compare his 2019 performance against the top ATP field. 
 
 ##
 
@@ -160,7 +160,7 @@ Would Zverev's vulnerable performance on 2nd serve justify the high-risk two-fir
 
 ##
 
-But perhaps a simpler and better solution for Zverev would instead be to clean his $Prob(\mbox{2nd Serve In)}$, which will increase his overall win probability on second serve. He's already capable at winning 2nd serve points when they land in; the issue is in getting those serves in, in the first place. A simple approach may be more feasible in the practical sense of improving Zverev's second serve. Crunching the numbers, an improvement from 80% to 87% in $Prob(\mbox{2nd Serve In})$ would have Zverev in equilibrium with the two-first-serves approach. By the way, the average $Prob(\mbox{2nd Serve In})$ in 2019 among ATP players was 89%.
+But perhaps a simpler and better solution for Zverev would instead be to clean his $Prob(\mbox{2nd Serve In)}$, which will increase his overall win probability on second serve. He's already capable at winning 2nd serve points when they land in; the issue is in getting those serves in, in the first place. A simple approach may be more feasible in the practical sense of improving Zverev's second serve. Crunching the numbers, an improvement from 80% to 87% in $Prob(\mbox{2nd Serve In})$ would have Zverev in equilibrium with the two-first-serves approach. By the way the average $Prob(\mbox{2nd Serve In})$ in 2019 among ATP players was registered at 89%, so even an average accuracy would pay major dividends for Zverev's second serve.
 
 
 ##
