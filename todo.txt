@@ -1,0 +1,6 @@
+Things to do:
+
+- When comparing Zverev to his contemporares, it would be nice to have a group devoted to the 'top 100 rank players' in gray. 
+We see how Zverev ranks in relation to Djokovic, Fed, Nadal, etc but it would also be nice to see more concretely how he compares to
+the remaining mortal ATP players.
+
